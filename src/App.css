@@ -1,1 +1,7 @@
-
+.movielist {
+  align-items: center;
+  display: flex;
+  font-size: 18px;
+  color: "red";
+  justify-content: space-between;
+}
