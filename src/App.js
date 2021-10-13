@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
-
+//import { Box, List, ListItem } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import "bulma/css/bulma.min.css";
 function App() {
+  const [cast, setCast] = useState([]);
+  const apiKey = "d2d1e21e8a8e48f592b0deb6d48f6571";
+  //  const [loading, setLoading] = useState();
+  const getCast = () => {
+    return fetch("http://mediastack.lan:7878/api/v3/movie?apiKey=" + apiKey)
+      .then((response) => response.json())
+      .then((data) => setCast(data))
+      .catch((error) => console.error(error));
+  };
+  useEffect(() => {
+    getCast();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {cast
+        .filter((title) => title.id < 11)
+        .map((home) => (
+          <section className="buttons">
+            <h1 className="button is-dark is-outlined is-rounded" key={home.id}>
+              {home.title}
+            </h1>
+            {/* <img
+            src={home.images[0].remoteUrl}
+            alt={home.title}
+            width="150"
+            height="150"
+          /> */}
+          </section>
+        ))}
     </div>
   );
 }
